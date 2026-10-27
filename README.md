@@ -22,7 +22,7 @@
 
 ## 🗺️ Map
 
-[What it is](#-what-regesarc-is) · [Measured speeds](#-measured-speeds) · [Features](#-features) · [Coming next](#-coming-next) · [Download](#%EF%B8%8F-download) · [Verify](#-verify-the-download) · [Requirements](#%EF%B8%8F-system-requirements) · [Install](#-install-and-uninstall) · [License](#-license-and-credits)
+[What it is](#-what-regesarc-is) · [Measured speeds](#-measured-speeds) · [Features](#-features) · [Download](#%EF%B8%8F-download) · [Verify](#-verify-the-download) · [Requirements](#%EF%B8%8F-system-requirements) · [Install](#-install-and-uninstall) · [License](#-license-and-credits)
 
 ## 🌌 What RegesARC is
 
@@ -49,15 +49,18 @@ Measured on one machine: an **NVIDIA RTX 4070 SUPER 12 GB** with an Intel Core i
 
 | Model | Engine | Context | Writing speed |
 | --- | --- | ---: | ---: |
-| RegesCore-1.0-35B MXFP4 | RegesARC Engine · Strata-Poly | 262,144 | **54–61 tok/s** |
+| RegesCore-1.0-35B MXFP4 | RegesARC Engine · Strata-Poly | 262,144 | **53–58 tok/s** |
+| RegesCore-1.0-35B Q8_0 (from BF16) | RegesARC Engine · Strata-Poly | | **48–53 tok/s** after the first answer |
 | Gemma 4 26B A4B (QAT Q4_0) | RegesARC Engine · Strata-Poly | 32,768 | **about 82 tok/s** (86 in the screenshot below) |
 | RegesCore BF16 (experimental opt-in) | RegesARC Engine · Strata-Poly | | **4–9 tok/s** |
+
+**Quality:** on the graded quality set, RegesCore MXFP4, Q8_0 and BF16 all scored **72 of 80**, and Q8_0's answers match BF16's token for token.
 
 <table>
 <tr>
 <td width="50%" valign="top">
-<img src="assets/chat-regescore-262k.png" alt="RegesARC 0.0.16 chat with RegesCore-1.0-35B MXFP4 at 262,144 context, writing at 55.9 and 56.0 tokens per second" width="100%">
-<sub>RegesCore-1.0-35B MXFP4 at 262,144 tokens of context: 55.9 and 56.0 tok/s, in the installed 0.0.16 app.</sub>
+<img src="assets/chat-regescore-262k-0.0.20.png" alt="RegesARC 0.0.20 chat with RegesCore-1.0-35B MXFP4 at 262,144 context, writing at 57.6 tokens per second" width="100%">
+<sub>RegesCore-1.0-35B MXFP4 at 262,144 tokens of context: 57.6 tok/s on a 4,679-token answer, in the installed 0.0.20 app. The chat box shows the work modes, project folder and permission mode.</sub>
 </td>
 <td width="50%" valign="top">
 <img src="assets/chat-gemma-4.png" alt="RegesARC 0.0.16 chat with Gemma 4 26B A4B, writing at 86.0 tokens per second" width="100%">
@@ -68,26 +71,23 @@ Measured on one machine: an **NVIDIA RTX 4070 SUPER 12 GB** with an Intel Core i
 
 ## ✨ Features
 
-**In the current download (0.0.16):**
+<p align="center"><img src="assets/neural-space-0.0.20.png" alt="RegesARC 0.0.20 Neural Space page with the particle nebula, this machine's GPU, RAM and CPU, and the loaded RegesCore model" width="100%"><br><sub>Neural Space in the installed 0.0.20 app: the nebula, this PC's hardware and the loaded model.</sub></p>
 
+**In the current download (0.0.20):**
+
+- 🔄 **Updates itself.** 0.0.20 is the first version that does: it checks for a new version, downloads it in the background, checks its SHA-256, and offers **Restart to update**. Earlier versions need 0.0.20 installed by hand once.
+- 🧭 **Work modes:** Chat, Build, Research, Dev, Terminal and CLI, remembered per conversation, with a **project folder** and a **permission mode** (Plan, Ask, Accept edits, Auto, Allow all, Bypass) in every chat box.
+- ⌨️ **A Zed-style terminal workspace,** written on RegesARC's own code.
+- 🖥️ **The `regesarc` CLI:** run the agent from any terminal against your local model, like `claude -p`, with modes and approvals.
+- 🔌 **MCP and skills discovery:** the MCP servers and skills you already set up in other apps, found and listed in place.
+- 🧩 **Plugins and connectors:** sandboxed local plugins, plus GitHub, Hugging Face, Google Drive, Slack and REST connectors with keys kept in Windows' key store.
+- 🗺️ **Pages from the RegesARC preview:** Neural Space, Overview, Model Planner, Model Detail, Benchmarks, Runtimes, Setup, Projects, Canvas & Artifacts and more.
 - 💬 **Rich chat:** Markdown answers with tables and code, links that ask before they open, pasted and attached files, a message queue, and live speed, token and cache stats on every answer.
 - 🧠 **Big models on a small GPU:** RegesCore and Gemma 4 in Strata-Poly, Lemonade layer auto-fit for the rest, and full 262K context for RegesCore by default.
 - 🖼️ **Images:** RegesCore reads images in Strata-Poly.
 - 🗂️ **Finds your models where they are:** RegesARC's own folder, LM Studio's folders and Ollama's models, read in place.
 - 🛰️ **Server page and local API:** an OpenAI- and Anthropic-compatible API on 127.0.0.1, with connected clients, a live request log and request details.
-- 🤖 **Agents and Build mode,** with a packaged terminal and prompt reuse across turns.
-- 🎨 **Ten themes,** from Night and Day to Ocean, Ember and High contrast.
-
-## 🚀 Coming next
-
-These are built and in QA for 0.0.18 and 0.0.19. They are **not** in the 0.0.16 download yet.
-
-- 🧭 **Work modes:** Chat, Build, Research, Dev, Terminal and CLI, remembered per conversation.
-- ⌨️ **A Zed-style terminal workspace,** written on RegesARC's own code.
-- 🖥️ **The `regesarc` CLI:** run the agent from any terminal against your local model, like `claude -p`, with modes and approvals.
-- 🔌 **MCP and skills discovery:** the MCP servers and skills you already set up in other apps, found and listed in place.
-- 🧩 **Plugins and connectors:** sandboxed local plugins, plus GitHub, Hugging Face, Google Drive, Slack and REST connectors with keys kept in Windows' key store.
-- 🗺️ **Pages from the RegesARC preview:** Overview, Model Planner, Model Detail, Benchmarks, Runtimes and Setup.
+- 🎨 **Eleven themes,** from Night, Day and Crimson to Ocean, Ember and High contrast.
 
 ## ⬇️ Download
 
@@ -95,10 +95,10 @@ Get the installer from the [releases page](https://github.com/iboss21/regesarc-r
 
 | Version | File | Size | SHA-256 |
 | --- | --- | --- | --- |
-| 0.0.16 | `RegesARCSetup-x64-0.0.16.exe` | 1.33 GB (1,334,534,315 bytes) | `622de721f2a3b0d5c065639a37a91eef4647c29b70d40eff838af5d2454df9b4` |
+| 0.0.20 | `RegesARCSetup-x64-0.0.20.exe` | 1.34 GB (1,335,116,650 bytes) | `907348304900d18aea394ad65ab712c954524e6deb5b59ed725c602ed921618a` |
 
 > [!WARNING]
-> **Unsigned development preview.** The installer is not code-signed yet, so Windows SmartScreen may warn before it runs ("More info", then "Run anyway"). Verify the SHA-256 before you run it.
+> **Unsigned development preview.** The installer is not code-signed yet, so Windows SmartScreen may warn before it runs ("More info", then "Run anyway"). Verify the SHA-256 before you run it. From 0.0.20 on, the app updates itself and checks each update's SHA-256 before installing it.
 
 ## 🔐 Verify the download
 
@@ -107,16 +107,16 @@ Each release includes `RegesARC-<version>-SHA256SUMS.txt`. Compare the installer
 PowerShell:
 
 ```powershell
-Get-FileHash .\RegesARCSetup-x64-0.0.16.exe -Algorithm SHA256
+Get-FileHash .\RegesARCSetup-x64-0.0.20.exe -Algorithm SHA256
 ```
 
 Command Prompt:
 
 ```
-certutil -hashfile RegesARCSetup-x64-0.0.16.exe SHA256
+certutil -hashfile RegesARCSetup-x64-0.0.20.exe SHA256
 ```
 
-The result must equal `622de721f2a3b0d5c065639a37a91eef4647c29b70d40eff838af5d2454df9b4` (letter case does not matter). If it differs, delete the file and download it again.
+The result must equal `907348304900d18aea394ad65ab712c954524e6deb5b59ed725c602ed921618a` (letter case does not matter). If it differs, delete the file and download it again.
 
 ## 🖥️ System requirements
 
