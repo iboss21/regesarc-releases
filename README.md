@@ -14,7 +14,7 @@ Get the installer from the [latest release](https://github.com/iboss21/regesarc-
 
 | Version | File | Size | SHA-256 |
 | --- | --- | --- | --- |
-| 0.0.14 | `RegesARCSetup-x64-0.0.14.exe` | 1.30 GB (1,303,740,362 bytes) | `74dfc47d833ba5d7c4ae39c80001743637fe69683939bb8610b73bf4c745fdd8` |
+| 0.0.16 | `RegesARCSetup-x64-0.0.16.exe` | 1.33 GB (1,334,534,315 bytes) | `622de721f2a3b0d5c065639a37a91eef4647c29b70d40eff838af5d2454df9b4` |
 
 > **Unsigned development preview.** The installer is not code-signed yet, so
 > Windows SmartScreen may warn before it runs ("More info", then "Run anyway").
@@ -42,17 +42,17 @@ installer's hash with it before running the installer.
 PowerShell:
 
 ```powershell
-Get-FileHash .\RegesARCSetup-x64-0.0.14.exe -Algorithm SHA256
+Get-FileHash .\RegesARCSetup-x64-0.0.16.exe -Algorithm SHA256
 ```
 
 Command Prompt:
 
 ```
-certutil -hashfile RegesARCSetup-x64-0.0.14.exe SHA256
+certutil -hashfile RegesARCSetup-x64-0.0.16.exe SHA256
 ```
 
 The result must equal
-`74dfc47d833ba5d7c4ae39c80001743637fe69683939bb8610b73bf4c745fdd8`
+`622de721f2a3b0d5c065639a37a91eef4647c29b70d40eff838af5d2454df9b4`
 (letter case does not matter). If it differs, delete the file and download it
 again.
 
