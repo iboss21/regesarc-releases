@@ -22,7 +22,7 @@
 
 ## 🗺️ Map
 
-[What it is](#-what-regesarc-is) · [Measured speeds](#-measured-speeds) · [Features](#-features) · [Download](#%EF%B8%8F-download) · [Verify](#-verify-the-download) · [Requirements](#%EF%B8%8F-system-requirements) · [Install](#-install-and-uninstall) · [License](#-license-and-credits)
+[What it is](#-what-regesarc-is) · [Measured speeds](#-measured-speeds) · [Features](#-features) · [Claude Code](#-use-with-claude-code) · [Download](#%EF%B8%8F-download) · [Verify](#-verify-the-download) · [Requirements](#%EF%B8%8F-system-requirements) · [Install](#-install-and-uninstall) · [License](#-license-and-credits)
 
 ## 🌌 What RegesARC is
 
@@ -49,7 +49,7 @@ Measured on one machine: an **NVIDIA RTX 4070 SUPER 12 GB** with an Intel Core i
 
 | Model | Engine | Context | Writing speed |
 | --- | --- | ---: | ---: |
-| RegesCore-1.0-35B MXFP4 | RegesARC Engine · Strata-Poly | 262,144 | **53–58 tok/s** |
+| RegesCore-1.0-35B MXFP4 | RegesARC Engine · Strata-Poly | 262,144 | **58.6–62.6 tok/s** |
 | RegesCore-1.0-35B Q8_0 (from BF16) | RegesARC Engine · Strata-Poly | | **48–53 tok/s** after the first answer |
 | Gemma 4 26B A4B (QAT Q4_0) | RegesARC Engine · Strata-Poly | 32,768 | **about 82 tok/s** (86 in the screenshot below) |
 | RegesCore BF16 (experimental opt-in) | RegesARC Engine · Strata-Poly | | **4–9 tok/s** |
@@ -73,9 +73,11 @@ Measured on one machine: an **NVIDIA RTX 4070 SUPER 12 GB** with an Intel Core i
 
 <p align="center"><img src="assets/neural-space-0.0.20.png" alt="RegesARC 0.0.20 Neural Space page with the particle nebula, this machine's GPU, RAM and CPU, and the loaded RegesCore model" width="100%"><br><sub>Neural Space in the installed 0.0.20 app: the nebula, this PC's hardware and the loaded model.</sub></p>
 
-**In the current download (0.0.20):**
+**In the current download (0.0.21):**
 
-- 🔄 **Updates itself.** 0.0.20 is the first version that does: it checks for a new version, downloads it in the background, checks its SHA-256, and offers **Restart to update**. Earlier versions need 0.0.20 installed by hand once.
+- 🔄 **Updates itself.** From 0.0.20 on, RegesARC checks for a new version, downloads it in the background, checks its SHA-256, and offers **Restart to update**. Versions before 0.0.20 need the current installer once, by hand.
+- 🤝 **Works with Claude Code:** Claude Code can use RegesARC as its model (see [below](#-use-with-claude-code)).
+- ✅ **The agent checks its own work:** in Build and Dev, a run that changed files runs the build or tests, or looks at the page, before it reports done.
 - 🧭 **Work modes:** Chat, Build, Research, Dev, Terminal and CLI, remembered per conversation, with a **project folder** and a **permission mode** (Plan, Ask, Accept edits, Auto, Allow all, Bypass) in every chat box.
 - ⌨️ **A Zed-style terminal workspace,** written on RegesARC's own code.
 - 🖥️ **The `regesarc` CLI:** run the agent from any terminal against your local model, like `claude -p`, with modes and approvals.
@@ -89,13 +91,30 @@ Measured on one machine: an **NVIDIA RTX 4070 SUPER 12 GB** with an Intel Core i
 - 🛰️ **Server page and local API:** an OpenAI- and Anthropic-compatible API on 127.0.0.1, with connected clients, a live request log and request details.
 - 🎨 **Eleven themes,** from Night, Day and Crimson to Ocean, Ember and High contrast.
 
+## 🤝 Use with Claude Code
+
+RegesARC's local API speaks Anthropic's Messages API, so [Claude Code](https://docs.anthropic.com/en/docs/claude-code) can run on your local model.
+
+1. In RegesARC, load a model and turn on the local API on the **Server** page. Note its port and API key.
+2. Point Claude Code at it:
+
+```powershell
+$env:ANTHROPIC_BASE_URL = "http://127.0.0.1:<port>"
+$env:ANTHROPIC_AUTH_TOKEN = "<your RegesARC local API key>"
+claude
+```
+
+- Claude Code's own tools, MCP servers, plugins and skills keep working, with the loaded model choosing which tool to call. In 0.0.21 QA, `claude -p` ran its Bash tool through RegesCore.
+- Any model name Claude Code asks for is served by the model loaded in RegesARC.
+- Anthropic's server-side tools, such as web search and code execution, don't work: they need Anthropic's servers.
+
 ## ⬇️ Download
 
 Get the installer from the [releases page](https://github.com/iboss21/regesarc-releases/releases).
 
 | Version | File | Size | SHA-256 |
 | --- | --- | --- | --- |
-| 0.0.20 | `RegesARCSetup-x64-0.0.20.exe` | 1.34 GB (1,335,116,650 bytes) | `907348304900d18aea394ad65ab712c954524e6deb5b59ed725c602ed921618a` |
+| 0.0.21 | `RegesARCSetup-x64-0.0.21.exe` | 1.34 GB (1,335,142,309 bytes) | `7b9b80b2e2e186ee32d048222dcdc28c5e1f7afbe9c4d5b1f1205eb54adf3258` |
 
 > [!WARNING]
 > **Unsigned development preview.** The installer is not code-signed yet, so Windows SmartScreen may warn before it runs ("More info", then "Run anyway"). Verify the SHA-256 before you run it. From 0.0.20 on, the app updates itself and checks each update's SHA-256 before installing it.
@@ -107,16 +126,16 @@ Each release includes `RegesARC-<version>-SHA256SUMS.txt`. Compare the installer
 PowerShell:
 
 ```powershell
-Get-FileHash .\RegesARCSetup-x64-0.0.20.exe -Algorithm SHA256
+Get-FileHash .\RegesARCSetup-x64-0.0.21.exe -Algorithm SHA256
 ```
 
 Command Prompt:
 
 ```
-certutil -hashfile RegesARCSetup-x64-0.0.20.exe SHA256
+certutil -hashfile RegesARCSetup-x64-0.0.21.exe SHA256
 ```
 
-The result must equal `907348304900d18aea394ad65ab712c954524e6deb5b59ed725c602ed921618a` (letter case does not matter). If it differs, delete the file and download it again.
+The result must equal `7b9b80b2e2e186ee32d048222dcdc28c5e1f7afbe9c4d5b1f1205eb54adf3258` (letter case does not matter). If it differs, delete the file and download it again.
 
 ## 🖥️ System requirements
 
